@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 // import { ClipLoader } from "react-spinners";
-import * as api from "../utils/api";
+import * as api from "../../utils/api";
+import { FestivalItem, Festival } from "./FestivalItem";
 
 export function FestivalsList() {
   const [festivals, setFestivals] = useState([])
@@ -11,11 +12,11 @@ export function FestivalsList() {
       .then((festivals: any) => {
         setFestivals(festivals);
       })
-  })
+  }, [])
 
   return (
     <ul>
-      {festivals.map((festival: any) => <li key={festival.festival_key}>{festival.festival_name}</li>)}
+        {festivals.map((festival: Festival) => <FestivalItem festival={festival} key={festival.festival_key}/>)}
     </ul>
   )
 }
