@@ -9,9 +9,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Routes>
-          <Route path="/" element={<FestivalsList />} />
-          <Route path="/festivals/:festivalName/stages/" element={<StagesList />} />
-          <Route path="/festivals/:festivalName/stages/:stageName/artists" element={<ArtistsList />} />
+          <Route path="/festival_specs_fe" element={<FestivalsList />} />
+          <Route path="/festival_specs_fe/festivals/:festivalName/stages/" element={<StagesList />} />
+          <Route path="/festival_specs_fe/festivals/:festivalName/stages/:stageName/artists" element={<ArtistsList />} />
         </Routes>
       </header>
     </div>
