@@ -21,6 +21,6 @@ export function FestivalItem ({ festival, setFestivals }: {festival: Festival, s
   }
 
   return (
-    <li key={festival.festival_key}><Link to={`/festivals/${festival.festival_name}/stages`}>{festival.festival_name} {new Date (festival.start_date).toDateString()} {new Date (festival.end_date).toDateString()}</Link><button onClick={handleDelete}>Delete</button></li>
+    <li key={festival.festival_key}><Link to={`/festival_specs_fe/festivals/${festival.festival_name}/stages`}>{festival.festival_name} {new Date (festival.start_date).toDateString()} {new Date (festival.end_date).toDateString()}</Link><button onClick={handleDelete}>Delete</button></li>
   )
 }
