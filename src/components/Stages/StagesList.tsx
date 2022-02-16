@@ -17,8 +17,13 @@ export function StagesList() {
   }, [festivalName])
 
   return (
-    <ul>
-        {stages.map((stage: Stage) => <StageItem stage={stage} key={stage.stage_key} festivalName={festivalName}/>)}
-    </ul>
+    <>
+      <p>{festivalName}</p>
+      { stages.length ? 
+      <ul>
+          {stages.map((stage: Stage) => <StageItem stage={stage} key={stage.stage_key} festivalName={festivalName}/>)}
+      </ul> :
+      <p>No Stages Currently Created</p>}
+    </>
   )
 }
