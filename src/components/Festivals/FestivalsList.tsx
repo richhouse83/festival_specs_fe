@@ -20,7 +20,7 @@ export function FestivalsList() {
       <ul>
           {festivals.map((festival: Festival) => <FestivalItem festival={festival} key={festival.festival_key} setFestivals={setFestivals}/>)}
       </ul>
-      <FestivalForm setFestivals={setFestivals}/>
+      <FestivalForm setFestivals={setFestivals} festivals={festivals}/>
     </>
   )
 }

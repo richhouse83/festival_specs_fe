@@ -1,4 +1,5 @@
 import { BaseSyntheticEvent, useState } from "react"
+import { Button } from '@mantine/core'
 import { Link } from "react-router-dom"
 import * as api from '../../utils/api'
 
@@ -28,8 +29,8 @@ export function FestivalItem ({ festival, setFestivals }: {festival: Festival, s
   return (
     <li key={festival.festival_key}>
       <Link to={`/festival_specs_fe/festivals/${festival.festival_name}/stages`}>{festival.festival_name} {new Date (festival.start_date).toDateString()} {new Date (festival.end_date).toDateString()}</Link>
-      <button onClick={handleDelete}>{!confirmation ? 'Delete' : 'Confirm'}</button>
-      {confirmation && <button onClick={() => setConfirmation(false)}>Reset</button>}
+      <Button onClick={handleDelete}>{!confirmation ? 'Delete' : 'Confirm'}</Button>
+      {confirmation && <Button onClick={() => setConfirmation(false)}>Reset</Button>}
     </li>
   )
 }

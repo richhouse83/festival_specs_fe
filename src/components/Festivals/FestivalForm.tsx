@@ -1,28 +1,36 @@
-import {useState, BaseSyntheticEvent} from 'react';
-import { Festival } from './FestivalItem';
-import { addNewFestival } from '../../utils/api';
+import { useState } from "react";
+import { TextInput, Button } from '@mantine/core';
+import { DatePicker } from '@mantine/dates';
+import { BeatLoader } from "react-spinners";
+import { useForm } from '@mantine/hooks';
+import { Festival } from "./FestivalItem";
+import { addNewFestival } from "../../utils/api";
 
+export function FestivalForm({ festivals, setFestivals }: { festivals: Festival[], setFestivals: Function }) {
+  const [errMessage, setErrMessage] = useState("");
+  const [uploading, setUploading] = useState(false);
 
-export function FestivalForm ({setFestivals }: {setFestivals: Function}) {
-  const [newFestivalName, setNewFestivalName] = useState('New Festival');
-  const [newStartDate, setNewStartDate] = useState('2022-01-01');
-  const [newEndDate, setNewEndDate] = useState('2022-01-02')
-  const [errMessage, setErrMessage] = useState('');
-  const [createMessage, setCreateMessage] = useState('');
+  const festivalForm: any = useForm({
+    initialValues: {
+      festival_name: 'New Festival',
+      start_date: new Date(Date.now()),
+      end_date: new Date(Date.now()),
+    },
+    validationRules: {
+      festival_name: (name) => festivals.every((festivalToCheck) => name !== festivalToCheck.festival_name),
+      start_date: (date) => date <= festivalForm.values.end_date,
+      end_date: (date) => date >= festivalForm.values.start_date,
+    },
+    errorMessages: {
+      festival_name: "Must be unique name",
+      start_date: "Must be before or equal to Festival End Date",
+      end_date: "Must be after or equal to Festival Start Date"
+    }
+  })
 
-  const handleChange = (event: BaseSyntheticEvent, setFunction: Function) => {
-    setFunction(event.target.value)
-  }
-
-  const handleSubmit = async (event: BaseSyntheticEvent) => {
-    setErrMessage('');
-    setCreateMessage('Adding Festival...');
-    event.preventDefault();
-    const festivalToAdd: Festival = {
-      festival_name: newFestivalName,
-      start_date: new Date(newStartDate),
-      end_date: new Date(newEndDate),
-    };
+  const handleSubmit = async (festivalToAdd: Festival) => {
+    setErrMessage("");
+    setUploading(true);
     let newFestival: Festival;
     try {
       newFestival = await addNewFestival(festivalToAdd);
@@ -34,17 +42,18 @@ export function FestivalForm ({setFestivals }: {setFestivals: Function}) {
       console.error(err);
       setErrMessage("An Error Occurred");
     }
-    setCreateMessage('');
+    setUploading(false);
   };
 
   return (
-    <form>
-      <input type="text" defaultValue={'New Festival'} onChange={(event) => handleChange(event, setNewFestivalName)} />
-      <input type="date" defaultValue={'2022-01-01'} onChange={(event) => handleChange(event, setNewStartDate)}/>
-      <input type="date" defaultValue={'2022-01-02'} onChange={(event) => handleChange(event, setNewEndDate)}/>
-      <button onClick={handleSubmit}>Create New Festival</button>
-      {createMessage && <p>{createMessage}</p>}
+    <form onSubmit={festivalForm.onSubmit((festivalToAdd: Festival) => handleSubmit(festivalToAdd))}>
+      <TextInput required label="Festival Name" placeholder="New Festival" {...festivalForm.getInputProps('festival_name')} />
+      <DatePicker required label="Start Date" {...festivalForm.getInputProps('start_date')} />
+      <DatePicker required label="End Date" {...festivalForm.getInputProps('end_date')} />
+      <Button type="submit">Create New Festival</Button>
+      <br/>
+      <BeatLoader color="#FFF" loading={uploading}/>
       {errMessage && <p>{errMessage}</p>}
     </form>
-  )
+  );
 }
