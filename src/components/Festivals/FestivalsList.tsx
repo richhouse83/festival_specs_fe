@@ -8,6 +8,8 @@ import { FestivalItem, Festival } from "./FestivalItem";
 export function FestivalsList() {
   const [festivals, setFestivals] = useState([])
 
+  const festivalRows = festivals.map((festival: Festival) => <FestivalItem festival={festival} key={festival.festival_key} setFestivals={setFestivals}/>)
+
   useEffect(() => {
     api
       .getAllFestivals()
@@ -18,7 +20,7 @@ export function FestivalsList() {
 
   return (
     <>
-    <Table>
+    <Table highlightOnHover striped>
       <thead>
         <tr>
           <th>Festival Name</th>
@@ -27,7 +29,7 @@ export function FestivalsList() {
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody>{festivals.map((festival: Festival) => <FestivalItem festival={festival} key={festival.festival_key} setFestivals={setFestivals}/>)}</tbody>
+      <tbody>{festivalRows}</tbody>
     </Table>
       <FestivalForm setFestivals={setFestivals} festivals={festivals}/>
     </>

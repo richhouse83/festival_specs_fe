@@ -10,6 +10,10 @@ export interface Stage {
 export function StageItem ({ stage, festivalName }: {stage: Stage, festivalName: string | undefined}) {
 
   return (
-    <li><Link to={`/festival_specs_fe/festivals/${festivalName}/stages/${stage.stage_name}/artists`}>{stage.stage_name} {stage.capacity} {stage.location}</Link></li>
+    <tr>
+      <td><Link to={`/festival_specs_fe/festivals/${festivalName}/stages/${stage.stage_name}/artists`}>{stage.stage_name}</Link></td>
+      <td>{stage.capacity}</td>
+      <td>{stage.location}</td>
+      </tr>
   )
 }
