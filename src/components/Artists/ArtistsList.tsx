@@ -21,7 +21,7 @@ export function ArtistsList() {
   }, [festivalName, stageName])
 
   return (
-    <Table highlightOnHover striped>
+    <Table highlightOnHover>
       <thead>
       <tr>
           <th>Artist Name</th>

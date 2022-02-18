@@ -20,7 +20,7 @@ export function FestivalsList() {
 
   return (
     <>
-    <Table highlightOnHover striped>
+    <Table highlightOnHover>
       <thead>
         <tr>
           <th>Festival Name</th>

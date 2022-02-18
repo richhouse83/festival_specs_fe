@@ -4,17 +4,19 @@ import { Table } from "@mantine/core";
 // import { ClipLoader } from "react-spinners";
 import * as api from "../../utils/api";
 import { StageItem, Stage } from './StageItem';
+import { StageForm } from "./StageForm";
 
 export function StagesList() {
   const { festivalName } = useParams();
   const [stages, setStages] = useState([])
 
-  const stageRows = stages.map((stage: Stage) => <StageItem stage={stage} key={stage.stage_key} festivalName={festivalName}/>);
+  const stageRows = stages.map((stage: Stage) => <StageItem stage={stage} key={stage.stage_key} festivalName={festivalName} setStages={setStages}/>);
 
   useEffect(() => {
     api
       .getStagesByFestivalName(festivalName)
       .then((stages: any) => {
+        console.log(stages);
         setStages(stages);
       })
   }, [festivalName])
@@ -23,7 +25,7 @@ export function StagesList() {
     <>
       <p>{festivalName}</p>
       { stages.length ? 
-      <Table highlightOnHover striped>
+      <Table highlightOnHover>
         <thead>
         <tr>
           <th>Stage Name</th>
@@ -37,6 +39,7 @@ export function StagesList() {
       </Table>
       :
       <p>No Stages Currently Created</p>}
+      <StageForm festivalName={festivalName} stages={stages} setStages={setStages} />
     </>
   )
 }
