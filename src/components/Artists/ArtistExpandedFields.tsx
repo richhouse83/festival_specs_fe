@@ -1,7 +1,12 @@
 import { Table, Checkbox, Button } from '@mantine/core'
+import { useNavigate } from 'react-router-dom';
 import { Artist } from '../Interfaces'
 
 export function ArtistExpandedFields ({ artist, festivalName, stageName }: {artist: Artist, festivalName: string | undefined, stageName: string | undefined}) {
+  const navigate = useNavigate();
+
+  const navigation = () => navigate(`/festival_specs_fe/festivals/${festivalName}/stages/${stageName}/artists/${artist.artist_name}`)
+
   return (
       <td colSpan={4} className={'extended-details'}>
         <Table>
@@ -40,7 +45,7 @@ export function ArtistExpandedFields ({ artist, festivalName, stageName }: {arti
             </tr>
           </tbody>
         </Table>
-        <Button>Full Details</Button>
+        <Button onClick={navigation}>Full Details</Button>
       </td>
   );
 }

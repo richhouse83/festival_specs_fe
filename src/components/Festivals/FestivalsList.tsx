@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import { ClipLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 import { Table } from "@mantine/core";
 import * as api from "../../utils/api";
 import { FestivalForm } from "./FestivalForm";
@@ -8,6 +8,7 @@ import { Festival } from "../Interfaces";
 
 export function FestivalsList() {
   const [festivals, setFestivals] = useState([])
+  const [isLoading, setIsLoading] = useState(true);
 
   const festivalRows = festivals.map((festival: Festival) => <FestivalItem festival={festival} key={festival.festival_key} setFestivals={setFestivals}/>)
 
@@ -16,6 +17,7 @@ export function FestivalsList() {
       .getAllFestivals()
       .then((festivals: any) => {
         setFestivals(festivals);
+        setIsLoading(false);
       })
   }, [])
 
@@ -32,6 +34,7 @@ export function FestivalsList() {
       </thead>
       <tbody>{festivalRows}</tbody>
     </Table>
+      <BeatLoader loading={isLoading} />
       <FestivalForm setFestivals={setFestivals} festivals={festivals}/>
     </>
   )

@@ -13,6 +13,8 @@ export const getStagesByFestivalName = (festivalName: string | undefined) => req
 
 export const getArtistsByStageName = (festivalName: string | undefined, stageName: string | undefined) => request.get(`/festivals/${festivalName}/stages/${stageName}/artists`).then(({data: { artists}}) => artists)
 
+export const getArtistByName = (festivalName: string | undefined, stageName: string | undefined, artistName: string | undefined) => request.get(`/festivals/${festivalName}/stages/${stageName}/artists/${artistName}`).then(({ data: { artist } }) => artist)
+
 export const addNewFestival = (newFestival: Festival) => request.post(`/festivals`, newFestival).then(({ data: [festival]}) => festival);
 
 export const deleteFestivalByName = (festivalName: string) => request.delete(`festivals/${festivalName}`);

@@ -2,7 +2,17 @@ html {
   text-align: center;
   background-color: #ececec;
   color: darkslategray;
+  height: 100vh;
+  display: grid;
+  align-items: center;
+}
 
+td {
+  text-align: left;
+}
+
+.App {
+  padding: 2%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -28,12 +38,18 @@ html {
   text-align: center;
 }
 
-td {
-  text-align: left;
-}
-
 .extended-details {
   text-align: center;
   background-color: #dad8d8;
 
+}
+
+.create-form {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 15px 15px;
+}
+
+.create-button {
+  grid-column: 2/3;
 }

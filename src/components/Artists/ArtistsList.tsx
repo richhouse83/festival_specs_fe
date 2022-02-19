@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Table } from "@mantine/core";
-// import { ClipLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 import * as api from "../../utils/api";
 import { ArtistItem } from "./ArtistItem";
 import { Artist } from "../Interfaces";
@@ -13,6 +13,7 @@ export function ArtistsList() {
   const [artists, setArtists] = useState([])
   const [artistsInView, setArtistsInView] = useState([]);
   const [dates, setDates] = useState([new Date(Date.now()), new Date(Date.now())])
+  const [isLoading, setIsLoading] = useState(true);
 
   const artistRows = artistsInView.map((artist: Artist) => <ArtistItem artist={artist} key={artist.artist_key} festivalName={festivalName} stageName={stageName}/>)
        
@@ -23,6 +24,7 @@ export function ArtistsList() {
       .then((artists: any) => {
         setArtists(artists);
         setArtistsInView(artists);
+        setIsLoading(false);
       })
 
       api
@@ -52,6 +54,7 @@ export function ArtistsList() {
         </thead>
         <tbody>{artistRows}</tbody>
       </Table>
+      <BeatLoader loading={isLoading} />
     </>
   );
 }

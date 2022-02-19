@@ -46,11 +46,11 @@ export function FestivalForm({ festivals, setFestivals }: { festivals: Festival[
   };
 
   return (
-    <form onSubmit={festivalForm.onSubmit((festivalToAdd: Festival) => handleSubmit(festivalToAdd))}>
+    <form className='create-form' onSubmit={festivalForm.onSubmit((festivalToAdd: Festival) => handleSubmit(festivalToAdd))}>
       <TextInput required label="Festival Name" placeholder="New Festival" {...festivalForm.getInputProps('festival_name')} />
       <DatePicker required label="Start Date" {...festivalForm.getInputProps('start_date')} />
       <DatePicker required label="End Date" {...festivalForm.getInputProps('end_date')} />
-      <Button type="submit">Create New Festival</Button>
+      <Button className='create-button' type="submit">Create New Festival</Button>
       <br/>
       <BeatLoader color="#FFF" loading={uploading}/>
       {errMessage && <p>{errMessage}</p>}

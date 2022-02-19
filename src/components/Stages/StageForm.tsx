@@ -44,11 +44,11 @@ export function StageForm({ festivalName, stages, setStages }: { festivalName: s
   };
 
   return (
-    <form onSubmit={stageForm.onSubmit((stageToAdd: Stage) => handleSubmit(stageToAdd))}>
+    <form className='create-form' onSubmit={stageForm.onSubmit((stageToAdd: Stage) => handleSubmit(stageToAdd))}>
       <TextInput required label="Stage Name" placeholder="New Stage" {...stageForm.getInputProps('stage_name')} />
       <NumberInput required label="Capacity" step={50} min={0} {...stageForm.getInputProps('capacity')} />
       <TextInput required label="Location" placeholder="Location In Festival" {...stageForm.getInputProps('location')} />
-      <Button type="submit">Create New Stage</Button>
+      <Button className='create-button' type="submit">Create New Stage</Button>
       <br/>
       <BeatLoader color="#FFF" loading={uploading}/>
       {errMessage && <p>{errMessage}</p>}
