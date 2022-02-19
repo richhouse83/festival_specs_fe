@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/festival_specs_fe/static/css/main.9dc66292.css",
-    "main.js": "/festival_specs_fe/static/js/main.613a955e.js",
+    "main.css": "/festival_specs_fe/static/css/main.0b5c3022.css",
+    "main.js": "/festival_specs_fe/static/js/main.eeea5d96.js",
     "static/js/787.2e550e7f.chunk.js": "/festival_specs_fe/static/js/787.2e550e7f.chunk.js",
     "index.html": "/festival_specs_fe/index.html",
-    "main.9dc66292.css.map": "/festival_specs_fe/static/css/main.9dc66292.css.map",
-    "main.613a955e.js.map": "/festival_specs_fe/static/js/main.613a955e.js.map",
+    "main.0b5c3022.css.map": "/festival_specs_fe/static/css/main.0b5c3022.css.map",
+    "main.eeea5d96.js.map": "/festival_specs_fe/static/js/main.eeea5d96.js.map",
     "787.2e550e7f.chunk.js.map": "/festival_specs_fe/static/js/787.2e550e7f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9dc66292.css",
-    "static/js/main.613a955e.js"
+    "static/css/main.0b5c3022.css",
+    "static/js/main.eeea5d96.js"
   ]
 }
