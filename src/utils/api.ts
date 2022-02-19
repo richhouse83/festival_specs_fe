@@ -1,12 +1,13 @@
 import axios from 'axios';
-import { Festival } from '../components/Festivals/FestivalItem';
-import { Stage } from '../components/Stages/StageItem';
+import { Festival, Stage } from '../components/Interfaces';
 
 const request = axios.create({
   baseURL: "https://festival-specs.herokuapp.com/api",
 });
 
 export const getAllFestivals = () => request.get('/festivals').then(({ data: { festivals } }) => festivals);
+
+export const getFestivalByName = (festivalName: string | undefined) => request.get(`/festivals/${festivalName}`).then(({data: festival}) => festival);
 
 export const getStagesByFestivalName = (festivalName: string | undefined) => request.get(`/festivals/${festivalName}/stages`).then(({ data: { stages }}) => stages);
 

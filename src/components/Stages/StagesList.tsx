@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import { Table } from "@mantine/core";
 // import { ClipLoader } from "react-spinners";
 import * as api from "../../utils/api";
-import { StageItem, Stage } from './StageItem';
+import { StageItem } from './StageItem';
+import { Stage } from "../Interfaces";
 import { StageForm } from "./StageForm";
 
 export function StagesList() {
@@ -15,31 +16,33 @@ export function StagesList() {
   useEffect(() => {
     api
       .getStagesByFestivalName(festivalName)
-      .then((stages: any) => {
-        console.log(stages);
-        setStages(stages);
-      })
+      .then((stages: any) =>
+        setStages(stages));
   }, [festivalName])
 
   return (
     <>
       <p>{festivalName}</p>
-      { stages.length ? 
-      <Table highlightOnHover>
-        <thead>
-        <tr>
-          <th>Stage Name</th>
-          <th>Capacity</th>
-          <th>Location</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>{stageRows}</tbody>
-      
-      </Table>
-      :
-      <p>No Stages Currently Created</p>}
-      <StageForm festivalName={festivalName} stages={stages} setStages={setStages} />
+      {stages.length ? (
+        <Table highlightOnHover>
+          <thead>
+            <tr>
+              <th>Stage Name</th>
+              <th>Capacity</th>
+              <th>Location</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>{stageRows}</tbody>
+        </Table>
+      ) : (
+        <p>No Stages Currently Created</p>
+      )}
+      <StageForm
+        festivalName={festivalName}
+        stages={stages}
+        setStages={setStages}
+      />
     </>
-  )
+  );
 }

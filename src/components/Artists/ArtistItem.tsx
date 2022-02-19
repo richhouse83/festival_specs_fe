@@ -1,21 +1,23 @@
-// import { Link } from 'react-router-dom';
-
-export interface Artist {
-  artist_name: string;
-  artist_key: string;
-  date: string;
-  start_time: string;
-  end_time: string;
-}
+import { useState } from 'react';
+import { Artist } from '../Interfaces';
+import { ArtistExpandedFields } from './ArtistExpandedFields';
 
 export function ArtistItem ({ artist, festivalName, stageName }: {artist: Artist, festivalName: string | undefined, stageName: string | undefined}) {
+  const [expanded, setExpanded] = useState(false);
 
+  const handleClick = () => setExpanded(!expanded);
   return (
-    <tr>
-      <td>{artist.artist_name}</td>
-      <td>{new Date (artist.date).toDateString()}</td>
-      <td>{artist.start_time}</td>
-      <td>{artist.end_time}</td>
-    </tr>
+    <>
+      <tr onClick={handleClick}>
+        <td>{artist.artist_name}</td>
+        <td>{new Date (artist.date).toDateString()}</td>
+        <td>{artist.start_time}</td>
+        <td>{artist.end_time}</td>
+      </tr>
+      {expanded && 
+      <tr>
+        <ArtistExpandedFields artist={artist} festivalName={festivalName} stageName={stageName} />
+      </tr>}
+    </>
   )
 }

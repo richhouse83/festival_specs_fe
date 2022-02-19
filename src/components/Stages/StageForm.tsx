@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TextInput, Button, NumberInput } from '@mantine/core';
 import { BeatLoader } from "react-spinners";
 import { useForm } from '@mantine/hooks';
-import { Stage } from "./StageItem";
+import { Stage } from "../Interfaces";
 import { addNewStageToFestival } from "../../utils/api";
 
 export function StageForm({ festivalName, stages, setStages }: { festivalName: string | undefined, stages: Stage[], setStages: Function }) {

@@ -1,14 +1,8 @@
 import { BaseSyntheticEvent } from 'react';
-import { Link } from 'react-router-dom';
-import { DeleteButtons } from '../DeleteButtons';
+import { useNavigate } from 'react-router-dom';
+import { ActionMenu } from '../ActionMenu';
+import { Stage } from '../Interfaces'
 import { deleteStage } from '../../utils/api';
-
-export interface Stage {
-  stage_name: string;
-  stage_key: string;
-  capacity: number;
-  location: string;
-}
 
 export function StageItem({
   festivalName,
@@ -19,6 +13,10 @@ export function StageItem({
   stage: Stage;
   setStages: Function;
 }) {
+  const navigate = useNavigate();
+
+  const navigation = () => navigate(`/festival_specs_fe/festivals/${festivalName}/stages/${stage.stage_name}/artists`)
+
   const handleDelete = async (event: BaseSyntheticEvent) => {
     event.preventDefault();
     await deleteStage(festivalName, stage.stage_name);
@@ -33,16 +31,10 @@ export function StageItem({
 
   return (
     <tr>
-      <td>
-        <Link
-          to={`/festival_specs_fe/festivals/${festivalName}/stages/${stage.stage_name}/artists`}
-        >
-          {stage.stage_name}
-        </Link>
-      </td>
-      <td>{stage.capacity}</td>
-      <td>{stage.location}</td>
-      <td><DeleteButtons handleDelete={handleDelete}/></td>
+      <td onClick={navigation}>{stage.stage_name}</td>
+      <td onClick={navigation}>{stage.capacity}</td>
+      <td onClick={navigation}>{stage.location}</td>
+      <td className='action-cell'><ActionMenu handleDelete={handleDelete}/></td>
     </tr>
   );
 }

@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { Table } from "@mantine/core";
 import * as api from "../../utils/api";
 import { FestivalForm } from "./FestivalForm";
-import { FestivalItem, Festival } from "./FestivalItem";
+import { FestivalItem } from "./FestivalItem";
+import { Festival } from "../Interfaces";
 
 export function FestivalsList() {
   const [festivals, setFestivals] = useState([])

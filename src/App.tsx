@@ -7,13 +7,17 @@ import { ArtistsList } from './components/Artists/ArtistsList';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <Routes>
-          <Route path="/festival_specs_fe" element={<FestivalsList />} />
-          <Route path="/festival_specs_fe/festivals/:festivalName/stages/" element={<StagesList />} />
-          <Route path="/festival_specs_fe/festivals/:festivalName/stages/:stageName/artists" element={<ArtistsList />} />
-        </Routes>
-      </header>
+          <Routes>
+            <Route path="/festival_specs_fe" element={<FestivalsList />} />
+            <Route
+              path="/festival_specs_fe/festivals/:festivalName/stages/"
+              element={<StagesList />}
+            />
+            <Route
+              path="/festival_specs_fe/festivals/:festivalName/stages/:stageName/artists"
+              element={<ArtistsList />}
+            />
+          </Routes>
     </div>
   );
 }

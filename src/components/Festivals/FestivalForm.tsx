@@ -3,7 +3,7 @@ import { TextInput, Button } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { BeatLoader } from "react-spinners";
 import { useForm } from '@mantine/hooks';
-import { Festival } from "./FestivalItem";
+import { Festival } from "../Interfaces";
 import { addNewFestival } from "../../utils/api";
 
 export function FestivalForm({ festivals, setFestivals }: { festivals: Festival[], setFestivals: Function }) {
