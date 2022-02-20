@@ -5,8 +5,9 @@ import { BeatLoader } from "react-spinners";
 import * as api from "../../utils/api";
 import { ArtistItem } from "./ArtistItem";
 import { Artist } from "../Interfaces";
-import { StageDateOrganiser } from "../Stages/StageDateOrganiser";
+import { DateOrganiser } from "./DateOrganiser";
 import { CalendarIcon } from "@modulz/radix-icons";
+import { ArtistForm } from "./ArtistForm";
 
 export function ArtistsList() {
   const { festivalName, stageName } = useParams();
@@ -41,7 +42,7 @@ export function ArtistsList() {
     <>
       <p>{stageName}</p>
       <div>
-        <CalendarIcon /><StageDateOrganiser dates={dates} artists={artists} setArtistsInView={setArtistsInView} />
+        <CalendarIcon /><DateOrganiser dates={dates} artists={artists} setArtistsInView={setArtistsInView} />
       </div>
       <Table highlightOnHover>
         <thead>
@@ -55,6 +56,7 @@ export function ArtistsList() {
         <tbody>{artistRows}</tbody>
       </Table>
       <BeatLoader loading={isLoading} />
+      <ArtistForm festivalName={festivalName} stageName={stageName} artists={artists} setArtistsInView={setArtistsInView} dates={dates}/>
     </>
   );
 }

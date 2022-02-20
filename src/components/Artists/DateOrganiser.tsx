@@ -4,7 +4,7 @@ import { BaseSyntheticEvent } from 'react';
 import { Artist } from '../Interfaces';
 
 
-export function StageDateOrganiser({ dates, artists, setArtistsInView }: { dates: Date[], artists: Artist[], setArtistsInView: Function}) {
+export function DateOrganiser({ dates, artists, setArtistsInView }: { dates: Date[], artists: Artist[], setArtistsInView: Function}) {
 
   const datesArray = eachDayOfInterval({start: new Date(dates[0]), end: new Date(dates[1])})
 

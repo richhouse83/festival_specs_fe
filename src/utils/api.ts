@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Festival, Stage } from '../components/Interfaces';
+import { Festival, Stage, Artist } from '../components/Interfaces';
 
 const request = axios.create({
   baseURL: "https://festival-specs.herokuapp.com/api",
@@ -20,5 +20,7 @@ export const addNewFestival = (newFestival: Festival) => request.post(`/festival
 export const deleteFestivalByName = (festivalName: string) => request.delete(`festivals/${festivalName}`);
 
 export const addNewStageToFestival = (festivalName: string | undefined, newStage: Stage) => request.post(`/festivals/${festivalName}/stages`, newStage).then(({data: [stage]}) => stage);
+
+export const addNewArtist = (festivalName: string | undefined, stageName: string | undefined, newArtist: Artist) => request.post(`/festivals/${festivalName}/stages/${stageName}/artists`, newArtist).then(({ data: { artist: [newArtist] } }) => newArtist)
 
 export const deleteStage = (festivalName: string | undefined, stageName: string) => request.delete(`/festivals/${festivalName}/stages/${stageName}`);

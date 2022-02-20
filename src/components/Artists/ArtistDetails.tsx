@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect, BaseSyntheticEvent } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {TextInput, Checkbox} from '@mantine/core'
-import { DatePicker, TimeInput } from '@mantine/dates';
+import { DatePicker } from '@mantine/dates';
 import { Artist } from '../Interfaces';
 import { BeatLoader } from 'react-spinners';
 import { getArtistByName } from '../../utils/api';
