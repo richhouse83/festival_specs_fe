@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, BaseSyntheticEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import {TextInput, Checkbox} from '@mantine/core'
+import {TextInput, Checkbox, TextInputProps, Button} from '@mantine/core'
 import { DatePicker } from '@mantine/dates';
 import { Artist } from '../Interfaces';
 import { BeatLoader } from 'react-spinners';
@@ -19,7 +19,6 @@ export function ArtistDetails () {
         setArtist(artistToView);
         setNewArtist(artistToView);
         setIsLoading(false);
-        console.log(Date.parse(artist?.start_time || '00:00:00'));
       })
     
   }, [artistName, stageName, festivalName])
@@ -34,19 +33,34 @@ export function ArtistDetails () {
     })
   }
 
+  const getTextInputValue = (nameOfValue: string): TextInputProps => {
+    const label = nameOfValue.split('_').map((word) => word.replace(/^\w/, (c) => c.toUpperCase())).join(' ');
+    return {
+      label,
+      value: newArtist?.[nameOfValue as keyof Artist].toString() || '',
+      onChange: (event: BaseSyntheticEvent) => updateParam(event.target.value, nameOfValue),
+    }
+  }
+
+  const submitForm = (event: BaseSyntheticEvent) => {
+    event.preventDefault();
+    console.log(newArtist);
+  }
+
   return (
     <>
       <p>Artist Details</p>
       <BeatLoader loading={isLoading} />
       {!isLoading &&
-      <form>
-        <TextInput label='Artist Name'  value={newArtist?.artist_name} onChange={(event) => updateParam(event.target.value, 'artist_name')}/>
-        <DatePicker label='Date' value={new Date(newArtist?.date || '2022-01-01')} onChange={(event) => updateParam(event, 'date')}/>
-        <TextInput label='Start Time' value={newArtist?.start_time} onChange={(event) => updateParam(event.target.value, 'start_time')}/>
-        <TextInput label='End Time' value={newArtist?.end_time} onChange={(event) => updateParam(event.target.value, 'end_time')}/>
-        <Checkbox label='Specs In?' defaultChecked={newArtist?.specs_in} />
+      <form onSubmit={submitForm}>
+        <TextInput {...getTextInputValue('artist_name')}/>
+        <DatePicker label='Date' value={new Date(newArtist?.date || '2022-01-01')} onChange={(value) => updateParam(value, 'date')}/>
+        <TextInput {...getTextInputValue('start_time')}/>
+        <TextInput {...getTextInputValue('end_time')}/>
+        <Checkbox label='Specs In?' defaultChecked={newArtist?.specs_in} onChange={(value) => updateParam(value, 'specs_in')}/>
         <Checkbox label='Pips Sent?' defaultChecked={newArtist?.pips_sent} />
         <TextInput label='Extras' value={newArtist?.extras} onChange={(event) => updateParam(event.target.value, 'extras')} />
+        <Button type="submit">Submit</Button>
       </form>}
     </>
   )
