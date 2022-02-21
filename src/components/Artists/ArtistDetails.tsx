@@ -1,25 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, BaseSyntheticEvent } from 'react';
 import { useParams } from 'react-router-dom';
-import {TextInput, Checkbox, TextInputProps, Button} from '@mantine/core'
-import { DatePicker } from '@mantine/dates';
+import {TextInput, Checkbox, NumberInput, Button, TextInputProps, CheckboxProps, NumberInputProps} from '@mantine/core'
 import { Artist } from '../Interfaces';
 import { BeatLoader } from 'react-spinners';
-import { getArtistByName } from '../../utils/api';
+import { DateSelector } from '../DateSelector';
+import * as api from '../../utils/api';
+import { artistParams } from "../../utils/artistParams";
 
 export function ArtistDetails () {
   const [artist, setArtist]: [Artist | undefined, Function] = useState();
   const [newArtist, setNewArtist]: [Artist | undefined, Function] = useState()
+  const [dates, setDates] = useState([new Date(Date.now()), new Date(Date.now())])
   const [isLoading, setIsLoading] = useState(true);
   const {artistName, stageName, festivalName} = useParams();
 
   useEffect(() => {
-    getArtistByName(festivalName, stageName, artistName)
+    api
+      .getArtistByName(festivalName, stageName, artistName)
       .then((artistToView: Artist) => {
         setArtist(artistToView);
         setNewArtist(artistToView);
         setIsLoading(false);
-      })
+      });
+
+    api
+      .getFestivalByName(festivalName)
+      .then(({ festival: { start_date, end_date } }) => {
+        setDates([start_date, end_date]);
+      });
     
   }, [artistName, stageName, festivalName])
 
@@ -33,13 +42,40 @@ export function ArtistDetails () {
     })
   }
 
-  const getTextInputValue = (nameOfValue: string): TextInputProps => {
-    const label = nameOfValue.split('_').map((word) => word.replace(/^\w/, (c) => c.toUpperCase())).join(' ');
+  const getLabel = (name: string) => name.split('_').map((word) => word.replace(/^\w/, (c) => c.toUpperCase())).join(' ');
+
+  const getTextInputValue = (nameOfParam: string): TextInputProps => {
+    const label = getLabel(nameOfParam);
+    const value = newArtist?.[nameOfParam as keyof Artist] ? newArtist?.[nameOfParam as keyof Artist].toString() : '';
+    const onChange = (event: BaseSyntheticEvent) => updateParam(event.target.value, nameOfParam)
     return {
       label,
-      value: newArtist?.[nameOfValue as keyof Artist].toString() || '',
-      onChange: (event: BaseSyntheticEvent) => updateParam(event.target.value, nameOfValue),
+      value,
+      onChange,
     }
+  }
+
+  const getBoxValue = (nameOfParam: string): CheckboxProps => {
+    const label = getLabel(nameOfParam);
+    const defaultChecked = Boolean(newArtist?.[nameOfParam as keyof Artist] ?? false);
+    const onChange = (event: BaseSyntheticEvent) => updateParam(event.target.checked, nameOfParam)
+    return {
+      label,
+      defaultChecked,
+      onChange,
+    }
+  }
+
+  const getNumberInputValue = (nameOfParam: string): NumberInputProps => {
+    const label = getLabel(nameOfParam);
+    const value = Number(newArtist?.[nameOfParam as keyof Artist] || 0);
+    const onChange = (value: number) => updateParam(value, nameOfParam)
+    return {
+      label,
+      value,
+      onChange,
+    }
+ 
   }
 
   const submitForm = (event: BaseSyntheticEvent) => {
@@ -47,20 +83,41 @@ export function ArtistDetails () {
     console.log(newArtist);
   }
 
+  const artistParamsMap = () => {
+    const map = [];
+    for (const key in artistParams) {
+      switch(artistParams[key as keyof typeof artistParams]) {
+        case ('string'):
+          map.push(<TextInput key={key} {...getTextInputValue(key)}/>)
+          break;
+        case ('boolean'):
+          map.push(<Checkbox key={key} {...getBoxValue(key)} />)
+          break;
+        case ('date'):
+          map.push(<DateSelector key={key} dates={dates} value={new Date(newArtist?.date || Date.now())} required onChange={(value: Date) => updateParam(value.toISOString(), 'date')}/>)
+          break;
+        case ('number'):
+          map.push(<NumberInput key={key} {...getNumberInputValue(key)} />)
+          break;
+        default:
+          break;          
+      }
+
+    }
+    return map
+  }
+
+  const formRows = artistParamsMap().map((item) => item);
+  
+
   return (
     <>
       <p>Artist Details</p>
       <BeatLoader loading={isLoading} />
       {!isLoading &&
-      <form onSubmit={submitForm}>
-        <TextInput {...getTextInputValue('artist_name')}/>
-        <DatePicker label='Date' value={new Date(newArtist?.date || '2022-01-01')} onChange={(value) => updateParam(value, 'date')}/>
-        <TextInput {...getTextInputValue('start_time')}/>
-        <TextInput {...getTextInputValue('end_time')}/>
-        <Checkbox label='Specs In?' defaultChecked={newArtist?.specs_in} onChange={(value) => updateParam(value, 'specs_in')}/>
-        <Checkbox label='Pips Sent?' defaultChecked={newArtist?.pips_sent} />
-        <TextInput label='Extras' value={newArtist?.extras} onChange={(event) => updateParam(event.target.value, 'extras')} />
-        <Button type="submit">Submit</Button>
+      <form onSubmit={submitForm} className={'create-form'}>
+        {formRows}
+        <Button type="submit">Update Artist</Button>
       </form>}
     </>
   )

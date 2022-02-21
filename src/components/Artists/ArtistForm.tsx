@@ -2,7 +2,6 @@ import { useState } from "react";
 import { TextInput, Button } from '@mantine/core';
 import { BeatLoader } from "react-spinners";
 import { useForm } from '@mantine/hooks';
-import { eachDayOfInterval } from "date-fns";
 import { Artist } from "../Interfaces";
 import { addNewArtist } from "../../utils/api";
 import { DateSelector } from "../DateSelector";
