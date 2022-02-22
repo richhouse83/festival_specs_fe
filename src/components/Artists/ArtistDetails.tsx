@@ -13,6 +13,8 @@ export function ArtistDetails () {
   const [newArtist, setNewArtist]: [Artist | undefined, Function] = useState()
   const [dates, setDates] = useState([new Date(Date.now()), new Date(Date.now())])
   const [isLoading, setIsLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const [updated, setUpdated] = useState(false);
   const {artistName, stageName, festivalName} = useParams();
 
   useEffect(() => {
@@ -33,6 +35,7 @@ export function ArtistDetails () {
   }, [artistName, stageName, festivalName])
 
   const updateParam = (value: any, param: string) => {
+    setUpdated(false);
     setNewArtist((prev: Artist) => {
       const changedArtist = {
         ...prev,
@@ -79,36 +82,40 @@ export function ArtistDetails () {
   }
 
   const submitForm = (event: BaseSyntheticEvent) => {
+    setUpdated(false);
+    setUploading(true);
     event.preventDefault();
-    console.log(newArtist);
+    return api.updateArtist(festivalName, stageName, artist?.artist_name, newArtist)
+      .then((returnedArtist: Artist) => {
+        setArtist(returnedArtist)
+        setUploading(false);
+        setUpdated(true)
+      })
   }
 
-  const artistParamsMap = () => {
+  const artistParamsMap = (sectionTitle: string) => {
     const map = [];
-    for (const key in artistParams) {
-      switch(artistParams[key as keyof typeof artistParams]) {
-        case ('string'):
-          map.push(<TextInput key={key} {...getTextInputValue(key)}/>)
-          break;
-        case ('boolean'):
-          map.push(<Checkbox key={key} {...getBoxValue(key)} />)
-          break;
-        case ('date'):
-          map.push(<DateSelector key={key} dates={dates} value={new Date(newArtist?.date || Date.now())} required onChange={(value: Date) => updateParam(value.toISOString(), 'date')}/>)
-          break;
-        case ('number'):
-          map.push(<NumberInput key={key} {...getNumberInputValue(key)} />)
-          break;
-        default:
-          break;          
+      const section = artistParams[sectionTitle as keyof typeof artistParams];
+      for (const key in section) {
+        switch(section[key as keyof typeof section]) {
+          case ('string'):
+            map.push(<TextInput key={key} {...getTextInputValue(key)}/>)
+            break;
+          case ('boolean'):
+            map.push(<Checkbox key={key} {...getBoxValue(key)} />)
+            break;
+          case ('date'):
+            map.push(<DateSelector key={key} dates={dates} value={new Date(newArtist?.date || Date.now())} required onChange={(value: Date) => updateParam(value.toISOString(), 'date')}/>)
+            break;
+          case ('number'):
+            map.push(<NumberInput key={key} {...getNumberInputValue(key)} />)
+            break;
+          default:
+            break;          
+        }
       }
-
-    }
-    return map
+    return map;
   }
-
-  const formRows = artistParamsMap().map((item) => item);
-  
 
   return (
     <>
@@ -116,8 +123,19 @@ export function ArtistDetails () {
       <BeatLoader loading={isLoading} />
       {!isLoading &&
       <form onSubmit={submitForm} className={'create-form'}>
-        {formRows}
-        <Button type="submit">Update Artist</Button>
+        <h3 className='details-section-title'>Basic Details</h3>
+        {artistParamsMap('basic').map((item) => item)}
+        <h3 className='details-section-title'>Stage Info</h3>
+        {artistParamsMap('stage').map((item) => item)}
+        <h3 className='details-section-title'>Vehicle Info</h3>
+        {artistParamsMap('vehicles').map((item) => item)}
+        <h3 className='details-section-title'>DJ Equipment</h3>
+        {artistParamsMap('DJ').map((item) => item)}
+        <div className='button-section'>
+          <Button className='create-button' type="submit">Update Artist</Button>
+          <BeatLoader loading={uploading} />
+          {updated && <p>Artist Updated</p>}
+        </div>
       </form>}
     </>
   )

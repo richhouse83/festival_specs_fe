@@ -53,3 +53,11 @@ td {
 .create-button {
   grid-column: 2/3;
 }
+
+.button-section {
+  grid-column: 1/4;
+}
+
+.details-section-title {
+  grid-column: 1/4;
+}

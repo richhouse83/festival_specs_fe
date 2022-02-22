@@ -49,9 +49,9 @@ export interface Artist {
   dj_extras: string;
   internet: string;
   supplier_notes: string;
-  '28t_trucks': string;
-  '18t_trucks': string;
-  '7_5t_trucks': string;
+  '28t_trucks': number;
+  '18t_trucks': number;
+  '7_5t_trucks': number;
 }
 
 export interface Stage {

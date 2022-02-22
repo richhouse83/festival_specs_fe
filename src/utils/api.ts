@@ -23,4 +23,6 @@ export const addNewStageToFestival = (festivalName: string | undefined, newStage
 
 export const addNewArtist = (festivalName: string | undefined, stageName: string | undefined, newArtist: Artist) => request.post(`/festivals/${festivalName}/stages/${stageName}/artists`, newArtist).then(({ data: { artist: [newArtist] } }) => newArtist)
 
+export const updateArtist = (festivalName: string | undefined, stageName: string | undefined, artistName: string | undefined, newArtist: Artist | undefined) => request.patch(`/festivals/${festivalName}/stages/${stageName}/artists/${artistName}`, newArtist).then(({ data: { artist: [newArtist] } }) => newArtist)
+
 export const deleteStage = (festivalName: string | undefined, stageName: string) => request.delete(`/festivals/${festivalName}/stages/${stageName}`);
