@@ -9,7 +9,7 @@ import { DateOrganiser } from "./DateOrganiser";
 import { CalendarIcon } from "@modulz/radix-icons";
 import { ArtistForm } from "./ArtistForm";
 
-export function ArtistsList() {
+export function ArtistsList({ setReturnLink }: {setReturnLink: Function}) {
   const { festivalName, stageName } = useParams();
   const [artists, setArtists] = useState([])
   const [artistsInView, setArtistsInView] = useState([]);
@@ -20,6 +20,7 @@ export function ArtistsList() {
        
 
   useEffect(() => {
+    setReturnLink(`festivals/${festivalName}/stages/${stageName}/artists`);
     api
       .getArtistsByStageName(festivalName, stageName)
       .then((artists: any) => {
@@ -36,7 +37,7 @@ export function ArtistsList() {
       }}) => {
         setDates([start_date, end_date])
       });
-  }, [festivalName, stageName])
+  }, [festivalName, stageName, setReturnLink])
 
   return (
     <>

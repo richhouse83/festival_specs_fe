@@ -76,9 +76,11 @@ export function ArtistForm({
         {...artistForm.getInputProps("start_time")}
       />
       <TextInput label="End Time" {...artistForm.getInputProps("end_time")} />
-      <Button className="create-button" type="submit">
-        Create New Artist
-      </Button>
+      <div className='button-section'>
+        <Button className="create-button" type="submit">
+          Create New Artist
+        </Button>
+      </div>
       <br />
       <BeatLoader color="#FFF" loading={uploading} />
       {errMessage && <p>{errMessage}</p>}

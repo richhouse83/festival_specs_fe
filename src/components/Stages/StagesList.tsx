@@ -7,7 +7,7 @@ import { StageItem } from './StageItem';
 import { Stage } from "../Interfaces";
 import { StageForm } from "./StageForm";
 
-export function StagesList() {
+export function StagesList({ setReturnLink }: {setReturnLink: Function}) {
   const { festivalName } = useParams();
   const [stages, setStages] = useState([])
   const [isLoading, setIsLoading] = useState(true);
@@ -15,13 +15,14 @@ export function StagesList() {
   const stageRows = stages.map((stage: Stage) => <StageItem stage={stage} key={stage.stage_key} festivalName={festivalName} setStages={setStages}/>);
 
   useEffect(() => {
+    setReturnLink(`festivals/${festivalName}/stages`);
     setIsLoading(true);
     api
       .getStagesByFestivalName(festivalName)
       .then((stages: any) =>
         setStages(stages));
         setIsLoading(false);
-  }, [festivalName])
+  }, [festivalName, setReturnLink])
 
   return (
     <>

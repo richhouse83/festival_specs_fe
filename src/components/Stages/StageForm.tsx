@@ -48,7 +48,11 @@ export function StageForm({ festivalName, stages, setStages }: { festivalName: s
       <TextInput required label="Stage Name" placeholder="New Stage" {...stageForm.getInputProps('stage_name')} />
       <NumberInput required label="Capacity" step={50} min={0} {...stageForm.getInputProps('capacity')} />
       <TextInput required label="Location" placeholder="Location In Festival" {...stageForm.getInputProps('location')} />
-      <Button className='create-button' type="submit">Create New Stage</Button>
+      <div className='button-section'>
+        <Button className="create-button" type="submit">
+          Create New Stage
+        </Button>
+      </div>
       <br/>
       <BeatLoader color="#FFF" loading={uploading}/>
       {errMessage && <p>{errMessage}</p>}

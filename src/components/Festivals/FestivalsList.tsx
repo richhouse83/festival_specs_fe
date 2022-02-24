@@ -6,20 +6,21 @@ import { FestivalForm } from "./FestivalForm";
 import { FestivalItem } from "./FestivalItem";
 import { Festival } from "../Interfaces";
 
-export function FestivalsList() {
+export function FestivalsList({ setReturnLink }: {setReturnLink: Function}) {
   const [festivals, setFestivals] = useState([])
   const [isLoading, setIsLoading] = useState(true);
 
   const festivalRows = festivals.map((festival: Festival) => <FestivalItem festival={festival} key={festival.festival_key} setFestivals={setFestivals}/>)
 
   useEffect(() => {
+    setReturnLink('');
     api
       .getAllFestivals()
       .then((festivals: any) => {
         setFestivals(festivals);
         setIsLoading(false);
       })
-  }, [])
+  }, [setReturnLink])
 
   return (
     <>

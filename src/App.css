@@ -4,7 +4,6 @@ html {
   color: darkslategray;
   height: 100vh;
   display: grid;
-  align-items: center;
 }
 
 td {
@@ -34,6 +33,7 @@ td {
   color: #61dafb;
 }
 
+
 .action-cell {
   text-align: center;
 }
@@ -41,7 +41,7 @@ td {
 .extended-details {
   text-align: center;
   background-color: #dad8d8;
-
+  
 }
 
 .create-form {
@@ -60,4 +60,10 @@ td {
 
 .details-section-title {
   grid-column: 1/4;
+}
+
+#header {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  text-align: left;
 }

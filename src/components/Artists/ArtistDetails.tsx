@@ -8,7 +8,7 @@ import { DateSelector } from '../DateSelector';
 import * as api from '../../utils/api';
 import { artistParams } from "../../utils/artistParams";
 
-export function ArtistDetails () {
+export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
   const [artist, setArtist]: [Artist | undefined, Function] = useState();
   const [newArtist, setNewArtist]: [Artist | undefined, Function] = useState()
   const [dates, setDates] = useState([new Date(Date.now()), new Date(Date.now())])
@@ -18,6 +18,7 @@ export function ArtistDetails () {
   const {artistName, stageName, festivalName} = useParams();
 
   useEffect(() => {
+    setReturnLink(`festivals/${festivalName}/stages/${stageName}/artists/${artistName}`)
     api
       .getArtistByName(festivalName, stageName, artistName)
       .then((artistToView: Artist) => {
