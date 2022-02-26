@@ -6,9 +6,9 @@ export const MainHeader = ({returnLink}: {returnLink: string | undefined}) => {
   const returnLinkMap = returnLink?.split('/').map((word, index, array) => {
     const link = 'festival_specs_fe/' + array.slice(0, index + 1).join('/');
     if (['festivals', 'stages', 'artists'].includes(word)) {
-    return <Link key={word} to={link}>{word}/</Link>
+    return <Link key={word + index} to={link}>{word}/</Link>
     }
-    return <>{word}/</>
+    return <span key={word + index}>{word}/</span>
   })
   return (
     <Header id="header" height={60} padding="xs">

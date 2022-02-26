@@ -11,12 +11,12 @@ import { ArtistForm } from "./ArtistForm";
 
 export function ArtistsList({ setReturnLink }: {setReturnLink: Function}) {
   const { festivalName, stageName } = useParams();
-  const [artists, setArtists] = useState([])
+  const [artists, setArtists]: [Artist[], Function] = useState([])
   const [artistsInView, setArtistsInView] = useState([]);
   const [dates, setDates] = useState([new Date(Date.now()), new Date(Date.now())])
   const [isLoading, setIsLoading] = useState(true);
 
-  const artistRows = artistsInView.map((artist: Artist) => <ArtistItem artist={artist} key={artist.artist_key} festivalName={festivalName} stageName={stageName}/>)
+  const artistRows = artistsInView.map((artist: Artist) => <ArtistItem key={artist.artist_key} artist={artist} setArtistsInView={setArtistsInView} setArtists={setArtists} festivalName={festivalName} stageName={stageName} dates={dates}/>)
        
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export function ArtistsList({ setReturnLink }: {setReturnLink: Function}) {
     <>
       <p>{stageName}</p>
       <div>
-        <CalendarIcon /><DateOrganiser dates={dates} artists={artists} setArtistsInView={setArtistsInView} />
+        Choose Date: <CalendarIcon /><DateOrganiser dates={dates} artists={artists} setArtistsInView={setArtistsInView} />
       </div>
       <Table highlightOnHover>
         <thead>

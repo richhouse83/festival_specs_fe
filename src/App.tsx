@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AppShell } from '@mantine/core';
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import { FestivalsList } from './components/Festivals/FestivalsList';
 import { StagesList } from './components/Stages/StagesList';
 import { ArtistsList } from './components/Artists/ArtistsList';
@@ -17,6 +17,7 @@ function App() {
     >
       <div className="App">
             <Routes>
+              <Route path='/festival_specs_fe' element={<Link to='/festival_specs_fe/festivals'>Enter</Link>}></Route>
               <Route path="/festival_specs_fe/festivals" element={<FestivalsList setReturnLink={setReturnLink} />} />
               <Route
                 path="/festival_specs_fe/festivals/:festivalName/stages/"

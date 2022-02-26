@@ -7,12 +7,14 @@ export function DateSelector({
   onChange,
   error,
   required,
+  showLabel = true,
 }: {
   dates: Date[];
   value: Date;
   onChange: Function;
   required: boolean;
   error?: string;
+  showLabel?: boolean
 }) {
   const datesArray = eachDayOfInterval({
     start: new Date(dates[0]),
@@ -24,7 +26,7 @@ export function DateSelector({
   return (
     <Select
       required={required}
-      label="Date"
+      label={showLabel ? 'Date' : null}
       data={dateItems}
       value={value ? value.toDateString() : null}
       onChange={(value) => onChange(new Date(value || dates[0].toDateString()))}
