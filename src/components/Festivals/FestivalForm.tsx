@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TextInput, Button } from '@mantine/core';
-import { DatePicker } from '@mantine/dates';
+import { DatePicker, RangeCalendar } from '@mantine/dates';
 import { BeatLoader } from "react-spinners";
 import { useForm } from '@mantine/hooks';
 import { Festival } from "../Interfaces";
@@ -46,17 +46,45 @@ export function FestivalForm({ festivals, setFestivals }: { festivals: Festival[
   };
 
   return (
-    <form className='create-form' onSubmit={festivalForm.onSubmit((festivalToAdd: Festival) => handleSubmit(festivalToAdd))}>
-      <TextInput required label="Festival Name" placeholder="New Festival" {...festivalForm.getInputProps('festival_name')} />
-      <DatePicker required label="Start Date" {...festivalForm.getInputProps('start_date')} />
-      <DatePicker required label="End Date" {...festivalForm.getInputProps('end_date')} />
-      <div className='button-section'>
+    <form
+      className="create-form"
+      onSubmit={festivalForm.onSubmit((festivalToAdd: Festival) =>
+        handleSubmit(festivalToAdd)
+      )}
+    >
+      <TextInput
+        required
+        label="Festival Name"
+        placeholder="New Festival"
+        {...festivalForm.getInputProps("festival_name")}
+      />
+      <DatePicker
+        required
+        label="Start Date"
+        {...festivalForm.getInputProps("start_date")}
+      />
+      <DatePicker
+        required
+        label="End Date"
+        {...festivalForm.getInputProps("end_date")}
+      />
+      <RangeCalendar
+        value={[festivalForm.values.start_date, festivalForm.values.end_date]}
+        onChange={(datesArray) =>
+          festivalForm.setValues((prev: any) => ({
+            ...prev,
+            start_date: datesArray[0],
+            end_date: datesArray[1],
+          }))
+        }
+      />
+      <div className="button-section">
         <Button className="create-button" type="submit">
           Create New Festival
         </Button>
       </div>
-      <br/>
-      <BeatLoader color="#FFF" loading={uploading}/>
+      <br />
+      <BeatLoader color="#FFF" loading={uploading} />
       {errMessage && <p>{errMessage}</p>}
     </form>
   );

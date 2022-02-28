@@ -183,6 +183,7 @@ export function ArtistExpandedFields({
             </tbody>
           </Table>
           <div>
+            Options:
             <Menu>
               <Menu.Item
                 onClick={submitForm}
