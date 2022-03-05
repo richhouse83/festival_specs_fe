@@ -5,17 +5,20 @@ import { useForm } from '@mantine/hooks';
 import { Artist } from "../Interfaces";
 import { addNewArtist } from "../../utils/api";
 import { DateSelector } from "../DateSelector";
+import { sortFunction } from '../../utils/helperFunctions'
 
 export function ArtistForm({
   festivalName,
   stageName,
   artists,
+  setArtists,
   setArtistsInView,
   dates,
 }: {
   festivalName: string | undefined;
   stageName: string | undefined;
   artists: Artist[];
+  setArtists: Function;
   setArtistsInView: Function;
   dates: Date[];
 }) {
@@ -48,8 +51,10 @@ export function ArtistForm({
       newArtist = await addNewArtist(festivalName, stageName, artistToAdd);
       setArtistsInView((prev: Artist[]) => {
         const newArtists = [...prev, newArtist];
+        newArtists.sort(sortFunction);
         return newArtists;
       });
+      setArtists((prev: Artist[]) => [...prev, newArtist])
     } catch (err) {
       console.error(err);
       setErrMessage("An Error Occurred");

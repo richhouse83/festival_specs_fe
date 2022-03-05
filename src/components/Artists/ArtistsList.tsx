@@ -57,7 +57,7 @@ export function ArtistsList({ setReturnLink }: {setReturnLink: Function}) {
         <tbody>{artistRows}</tbody>
       </Table>
       <BeatLoader loading={isLoading} />
-      <ArtistForm festivalName={festivalName} stageName={stageName} artists={artists} setArtistsInView={setArtistsInView} dates={dates}/>
+      <ArtistForm festivalName={festivalName} stageName={stageName} artists={artists} setArtists={setArtists} setArtistsInView={setArtistsInView} dates={dates}/>
     </>
   );
 }
