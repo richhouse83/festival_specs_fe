@@ -6,6 +6,7 @@ import * as api from "../../utils/api";
 import { StageItem } from './StageItem';
 import { Stage } from "../Interfaces";
 import { StageForm } from "./StageForm";
+import { FestivalCard } from "../Festivals/FestivalCard";
 
 export function StagesList({ setReturnLink }: {setReturnLink: Function}) {
   const { festivalName } = useParams();
@@ -26,7 +27,7 @@ export function StagesList({ setReturnLink }: {setReturnLink: Function}) {
 
   return (
     <>
-      <p>{festivalName}</p>
+      <FestivalCard festivalName={festivalName}/>
       {stages.length ? (
         <>
           <Table highlightOnHover>

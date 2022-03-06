@@ -59,6 +59,13 @@ export interface Stage {
   stage_key: string;
   capacity: number;
   location: string;
+  production_manager: string;
+  stage_manager: string;
+  audio_supplier: string;
+  lx_supplier: string;
+  video_supplier: string;
+  notes: string;
+  structure: string;
 }
 
 export interface Festival {

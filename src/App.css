@@ -62,6 +62,11 @@ td {
   grid-column: 1/4;
 }
 
+.card-div {
+  width: 60%;
+  margin: auto;
+}
+
 #header {
   display: grid;
   grid-template-rows: auto auto auto;

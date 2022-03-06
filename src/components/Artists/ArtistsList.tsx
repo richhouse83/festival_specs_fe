@@ -8,6 +8,7 @@ import { Artist } from "../Interfaces";
 import { DateOrganiser } from "./DateOrganiser";
 import { CalendarIcon } from "@modulz/radix-icons";
 import { ArtistForm } from "./ArtistForm";
+import { StageCard } from "../Stages/StageCard";
 
 export function ArtistsList({ setReturnLink }: {setReturnLink: Function}) {
   const { festivalName, stageName } = useParams();
@@ -41,7 +42,7 @@ export function ArtistsList({ setReturnLink }: {setReturnLink: Function}) {
 
   return (
     <>
-      <p>{stageName}</p>
+      <StageCard festivalName={festivalName} stageName={stageName}/>
       <div>
         Choose Date: <CalendarIcon /><DateOrganiser dates={dates} artists={artists} setArtistsInView={setArtistsInView} />
       </div>

@@ -11,6 +11,8 @@ export const getFestivalByName = (festivalName: string | undefined) => request.g
 
 export const getStagesByFestivalName = (festivalName: string | undefined) => request.get(`/festivals/${festivalName}/stages`).then(({ data: { stages }}) => stages);
 
+export const getStageByName = (festivalName: string | undefined, stageName: string | undefined) => request.get(`/festivals/${festivalName}/stages/${stageName}`).then(({ data: { stage }}) => stage);
+
 export const getArtistsByStageName = (festivalName: string | undefined, stageName: string | undefined) => request.get(`/festivals/${festivalName}/stages/${stageName}/artists`).then(({data: { artists}}) => artists)
 
 export const getArtistByName = (festivalName: string | undefined, stageName: string | undefined, artistName: string | undefined) => request.get(`/festivals/${festivalName}/stages/${stageName}/artists/${artistName}`).then(({ data: { artist } }) => artist)
@@ -20,6 +22,8 @@ export const addNewFestival = (newFestival: Festival) => request.post(`/festival
 export const deleteFestivalByName = (festivalName: string) => request.delete(`festivals/${festivalName}`);
 
 export const addNewStageToFestival = (festivalName: string | undefined, newStage: Stage) => request.post(`/festivals/${festivalName}/stages`, newStage).then(({data: [stage]}) => stage);
+
+export const updateStage = (festivalName: string | undefined, stageName: string | undefined, updatedStage: Stage | undefined) => request.patch(`/festivals/${festivalName}/stages/${stageName}`, updatedStage);
 
 export const addNewArtist = (festivalName: string | undefined, stageName: string | undefined, newArtist: Artist) => request.post(`/festivals/${festivalName}/stages/${stageName}/artists`, newArtist).then(({ data: { artist: [newArtist] } }) => newArtist)
 
