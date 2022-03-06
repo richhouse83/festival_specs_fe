@@ -2,7 +2,7 @@
 import { useState, useEffect, BaseSyntheticEvent } from 'react';
 import {TextInput, Checkbox, NumberInput, Button, TextInputProps, CheckboxProps, NumberInputProps} from '@mantine/core'
 import { useParams } from 'react-router-dom';
-import { Artist } from '../Interfaces';
+import { Artist, Stage } from '../Interfaces';
 import { BeatLoader } from 'react-spinners';
 import { DateSelector } from '../DateSelector';
 import * as api from '../../utils/api';
@@ -10,6 +10,7 @@ import { artistParams } from "../../utils/artistParams";
 
 export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
   const [artist, setArtist]: [Artist | undefined, Function] = useState();
+  const [stage, setStage]: [Stage | undefined, Function] = useState();
   const [newArtist, setNewArtist]: [Artist | undefined, Function] = useState()
   const [dates, setDates] = useState([new Date(Date.now()), new Date(Date.now())])
   const [isLoading, setIsLoading] = useState(true);
@@ -24,13 +25,17 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
       .then((artistToView: Artist) => {
         setArtist(artistToView);
         setNewArtist(artistToView);
-        setIsLoading(false);
-      });
-
-    api
-      .getFestivalByName(festivalName)
+        return api
+          .getStageByName(festivalName, stageName)
+      })
+      .then((retrievedStage: Stage) => {
+        setStage(retrievedStage);
+        return api
+          .getFestivalByName(festivalName)
+      })
       .then(({ festival: { start_date, end_date } }) => {
         setDates([start_date, end_date]);
+        setIsLoading(false);
       });
     
   }, [artistName, stageName, festivalName])
@@ -73,10 +78,16 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
   const getNumberInputValue = (nameOfParam: string): NumberInputProps => {
     const label = getLabel(nameOfParam);
     const value = Number(newArtist?.[nameOfParam as keyof Artist] || 0);
+    let error = null;
+    if (nameOfParam === 'risers_required') {
+      const maxRisers = Number(stage?.risers ?? 100);
+      if (maxRisers < Number(newArtist?.risers_required ?? 0)) error = 'Not enough risers on stage';
+    }
     const onChange = (value: number) => updateParam(value, nameOfParam)
     return {
       label,
       value,
+      error,
       onChange,
     }
  

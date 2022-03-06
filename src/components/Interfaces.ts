@@ -76,6 +76,7 @@ export interface Stage {
   '1210_type': string;
   '1210_quantity': number;
   notes: string;
+  risers: number;
 }
 
 export interface Festival {
