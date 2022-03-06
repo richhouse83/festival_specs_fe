@@ -34,7 +34,8 @@ export interface Artist {
   touring_set: boolean;
   touring_sfx: boolean;
   department_requirements: string;
-  risers_required: string;
+  risers_required: number;
+  riser_heights: string;
   backdrop: boolean;
   screen_use: boolean;
   source: boolean;
@@ -43,9 +44,12 @@ export interface Artist {
   touring_extras_agreed: boolean;
   festival_extras: string;
   festival_extras_agreed: boolean;
-  djm: string;
-  cdj: string;
-  '1210': string;
+  djm_type: string;
+  djm_quantity: number;
+  cdj_type: string;
+  cdj_quantity: number;
+  '1210_type': string;
+  '1210_quantity': number;
   dj_extras: string;
   internet: string;
   supplier_notes: string;
@@ -64,8 +68,14 @@ export interface Stage {
   audio_supplier: string;
   lx_supplier: string;
   video_supplier: string;
-  notes: string;
   structure: string;
+  djm_type: string;
+  djm_quantity: number;
+  cdj_type: string;
+  cdj_quantity: number;
+  '1210_type': string;
+  '1210_quantity': number;
+  notes: string;
 }
 
 export interface Festival {

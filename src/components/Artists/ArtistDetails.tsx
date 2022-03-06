@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, BaseSyntheticEvent } from 'react';
-import { useParams } from 'react-router-dom';
 import {TextInput, Checkbox, NumberInput, Button, TextInputProps, CheckboxProps, NumberInputProps} from '@mantine/core'
+import { useParams } from 'react-router-dom';
 import { Artist } from '../Interfaces';
 import { BeatLoader } from 'react-spinners';
 import { DateSelector } from '../DateSelector';
@@ -46,7 +46,7 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
     })
   }
 
-  const getLabel = (name: string) => name.split('_').map((word) => word.replace(/^\w/, (c) => c.toUpperCase())).join(' ');
+  const getLabel = (name: string) => name.split('_').map((word) => word.replace(/djm|cdj|dj/, (match) => match.toUpperCase()).replace(/^\w/, (c) => c.toUpperCase())).join(' ');
 
   const getTextInputValue = (nameOfParam: string): TextInputProps => {
     const label = getLabel(nameOfParam);
@@ -109,7 +109,7 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
             map.push(<DateSelector key={key} dates={dates} value={new Date(newArtist?.date || Date.now())} required onChange={(value: Date) => updateParam(value.toISOString(), 'date')}/>)
             break;
           case ('number'):
-            map.push(<NumberInput key={key} {...getNumberInputValue(key)} />)
+            map.push(<NumberInput min={0} key={key} {...getNumberInputValue(key)} />)
             break;
           default:
             break;          
@@ -133,8 +133,7 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
         <h3 className='details-section-title'>DJ Equipment</h3>
         {artistParamsMap('DJ').map((item) => item)}
         <div className='button-section'>
-          <Button className='create-button' type="submit">Update Artist</Button>
-          <BeatLoader loading={uploading} />
+          <Button className='create-button' type="submit" loading={uploading}>Update Artist</Button>
           {updated && <p>Artist Updated</p>}
         </div>
       </form>}

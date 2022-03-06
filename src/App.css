@@ -67,6 +67,12 @@ td {
   margin: auto;
 }
 
+.card-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
 #header {
   display: grid;
   grid-template-rows: auto auto auto;

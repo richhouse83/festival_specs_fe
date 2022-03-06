@@ -32,7 +32,7 @@ import { Stage } from "../Interfaces";
    
     }
 
-    const getLabel = (name: string) => name.split('_').map((word) => word.replace(/^\w/, (c) => c.toUpperCase())).join(' ');
+    const getLabel = (name: string) => name.split('_').map((word) => word.replace(/djm |cdj/, (match) => match.toUpperCase()).replace(/^\w/, (c) => c.toUpperCase())).join(' ');
 
     const firstLabel = getLabel(firstColumn);
     const secondLabel = getLabel(secondColumn);
@@ -41,13 +41,13 @@ import { Stage } from "../Interfaces";
           <thead>
             <tr>
               <th>{firstLabel}</th>
-              <th>{secondLabel}</th>
+              {secondColumn ? <th>{secondLabel}</th> : <></>}
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>{firstColumn === 'capacity' ? <NumberInput step={50} {...getNumberInputValue(firstColumn)}/> : <TextInput {...getTextInputValue(firstColumn)}/>}</td>
-              <td><TextInput {...getTextInputValue(secondColumn)}/></td>
+              <td>{['capacity', 'risers'].includes(firstColumn) ? <NumberInput step={['capacity'].includes(firstColumn) ? 50 : 1} min={0} {...getNumberInputValue(firstColumn)}/> : <TextInput {...getTextInputValue(firstColumn)}/>}</td>
+              {secondColumn ? <td>{secondColumn.endsWith('_quantity') ? <NumberInput min={0} {...getNumberInputValue(secondColumn)}/> : <TextInput {...getTextInputValue(secondColumn)}/>}</td> : <></>}
             </tr>
           </tbody>
         </Table>
