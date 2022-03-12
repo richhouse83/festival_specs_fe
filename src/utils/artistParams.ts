@@ -14,15 +14,14 @@ export const artistParams = {
     load_in_time: 'string',
     sound_check_start: 'string',
     sound_check_end: 'string',
-    internet: 'string',
-    supplier_notes: 'string',
-    extras: 'string',
   },
-  stage: {
+  touring_crew: {
     front_of_house_engineer: 'boolean',
     monitor_engineer: 'boolean',
     lighting_designer: 'boolean',
     video_engineer: 'boolean',
+  },
+  stage: {
     touring_foh_desk: 'boolean',
     touring_monitor_desk: 'boolean',
     touring_lighting_desk: 'boolean',

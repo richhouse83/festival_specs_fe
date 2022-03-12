@@ -32,7 +32,16 @@ import { Stage } from "../Interfaces";
    
     }
 
-    const getLabel = (name: string) => name.split('_').map((word) => word.replace(/djm |cdj/, (match) => match.toUpperCase()).replace(/^\w/, (c) => c.toUpperCase())).join(' ');
+    const getLabel = (name: string) =>
+      name
+        .split("_")
+        .map((word) =>
+          word
+            .replace(/djm|cdj/, (match) => match.toUpperCase())
+            .replace(/^\w/, (c) => c.toUpperCase())
+            .replace(/\/\w/, (c) => `/${c[1].toUpperCase()}`)
+        )
+        .join(" ");
 
     const firstLabel = getLabel(firstColumn);
     const secondLabel = getLabel(secondColumn);

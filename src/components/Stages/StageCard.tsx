@@ -41,11 +41,11 @@ export function StageCard({
         {toggleDetails &&
         <>
           <DetailsTable firstColumn='audio_supplier' secondColumn='lx_supplier' stage={stage} setStage={setStage}/>
-          <DetailsTable firstColumn='video_supplier' secondColumn='structure' stage={stage} setStage={setStage}/>
+          <DetailsTable firstColumn='video_supplier' secondColumn='structure/stage_type/supplier' stage={stage} setStage={setStage}/>
           <DetailsTable firstColumn='djm_type' secondColumn='djm_quantity' stage={stage} setStage={setStage}/>
           <DetailsTable firstColumn='1210_type' secondColumn='1210_quantity' stage={stage} setStage={setStage}/>
-          <DetailsTable firstColumn="risers" secondColumn="" stage={stage} setStage={setStage}/>
           <DetailsTable firstColumn='cdj_type' secondColumn='cdj_quantity' stage={stage} setStage={setStage}/>
+          <DetailsTable firstColumn="risers" secondColumn="" stage={stage} setStage={setStage}/>
           <DetailsTable firstColumn="notes" secondColumn="" stage={stage} setStage={setStage} />
         </>}
         <div className="card-buttons">

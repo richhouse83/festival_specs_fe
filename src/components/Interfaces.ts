@@ -68,7 +68,7 @@ export interface Stage {
   audio_supplier: string;
   lx_supplier: string;
   video_supplier: string;
-  structure: string;
+  'structure/stage_type/supplier': string;
   djm_type: string;
   djm_quantity: number;
   cdj_type: string;

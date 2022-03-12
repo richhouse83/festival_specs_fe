@@ -50,15 +50,21 @@ td {
   gap: 15px 15px;
 }
 
+.artist-details-form {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 15px 15px;
+}
+
+.artist-details-section-title {
+  grid-column: 1/5;
+}
+
 .create-button {
   grid-column: 2/3;
 }
 
 .button-section {
-  grid-column: 1/4;
-}
-
-.details-section-title {
   grid-column: 1/4;
 }
 

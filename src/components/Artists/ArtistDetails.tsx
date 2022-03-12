@@ -134,14 +134,16 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
       <p>Artist Details</p>
       <BeatLoader loading={isLoading} />
       {!isLoading &&
-      <form onSubmit={submitForm} className={'create-form'}>
-        <h3 className='details-section-title'>Basic Details</h3>
+      <form onSubmit={submitForm} className={'artist-details-form'}>
+        <h3 className='artist-details-section-title'>Basic Details</h3>
         {artistParamsMap('basic').map((item) => item)}
-        <h3 className='details-section-title'>Stage Info</h3>
+        <h3 className='artist-details-section-title'>Touring Crew</h3>
+        {artistParamsMap('touring_crew').map((item) => item)}
+        <h3 className='artist-details-section-title'>Stage Info</h3>
         {artistParamsMap('stage').map((item) => item)}
-        <h3 className='details-section-title'>Vehicle Info</h3>
+        <h3 className='artist-details-section-title'>Vehicle Info</h3>
         {artistParamsMap('vehicles').map((item) => item)}
-        <h3 className='details-section-title'>DJ Equipment</h3>
+        <h3 className='artist-details-section-title'>DJ Equipment</h3>
         {artistParamsMap('DJ').map((item) => item)}
         <div className='button-section'>
           <Button className='create-button' type="submit" loading={uploading}>Update Artist</Button>
