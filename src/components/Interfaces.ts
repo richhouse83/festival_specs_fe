@@ -34,8 +34,7 @@ export interface Artist {
   touring_set: boolean;
   touring_sfx: boolean;
   department_requirements: string;
-  risers_required: number;
-  riser_heights: string;
+  riser_requirements: string;
   backdrop: boolean;
   screen_use: boolean;
   source: boolean;
@@ -75,8 +74,8 @@ export interface Stage {
   cdj_quantity: number;
   '1210_type': string;
   '1210_quantity': number;
-  notes: string;
   risers: number;
+  available_risers: string;
 }
 
 export interface Festival {

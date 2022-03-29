@@ -33,8 +33,6 @@ export const artistParams = {
     screen_use: 'boolean',
     source: 'boolean',
     follow_spot_use: 'boolean',
-    risers_required: 'number',
-    riser_heights: 'string',
     touring_extras: 'string',
     touring_extras_agreed: 'boolean',
     department_requirements: 'string',

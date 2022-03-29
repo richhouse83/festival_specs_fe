@@ -6,3 +6,11 @@ export const sortFunction = (a: any, b: any) => {
   const timeB = +b.start_time.replaceAll(":", "")
   return timeA - timeB;
 }
+
+export const parseString = (stringToParse: string) => {
+  try {
+    return JSON.parse(stringToParse)
+  } catch (err) {
+    return false;
+  }
+}

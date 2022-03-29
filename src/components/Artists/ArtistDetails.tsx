@@ -7,6 +7,7 @@ import { BeatLoader } from 'react-spinners';
 import { DateSelector } from '../DateSelector';
 import * as api from '../../utils/api';
 import { artistParams } from "../../utils/artistParams";
+import { RiserRequirements } from './RiserRequirements';
 
 export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
   const [artist, setArtist]: [Artist | undefined, Function] = useState();
@@ -79,10 +80,6 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
     const label = getLabel(nameOfParam);
     const value = Number(newArtist?.[nameOfParam as keyof Artist] || 0);
     let error = null;
-    if (nameOfParam === 'risers_required') {
-      const maxRisers = Number(stage?.risers ?? 100);
-      if (maxRisers < Number(newArtist?.risers_required ?? 0)) error = 'Not enough risers on stage';
-    }
     const onChange = (value: number) => updateParam(value, nameOfParam)
     return {
       label,
@@ -145,6 +142,8 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
         {artistParamsMap('vehicles').map((item) => item)}
         <h3 className='artist-details-section-title'>DJ Equipment</h3>
         {artistParamsMap('DJ').map((item) => item)}
+        <h3 className='artist-details-section-title'>Risers</h3>
+        <RiserRequirements riserRequirements={artist?.riser_requirements} risersAvailable={stage?.available_risers}/>
         <div className='button-section'>
           <Button className='create-button' type="submit" loading={uploading}>Update Artist</Button>
           {updated && <p>Artist Updated</p>}

@@ -3,6 +3,7 @@ import { Card, Text, Button } from "@mantine/core";
 import { DoubleArrowDownIcon, DoubleArrowUpIcon } from "@modulz/radix-icons";
 import { Stage } from "../Interfaces";
 import { DetailsTable } from "./DetailsTable";
+import { ObjectFormItem } from "./ObjectFormItem";
 import * as api from '../../utils/api';
 
 export function StageCard({
@@ -25,6 +26,7 @@ export function StageCard({
   }, [festivalName, stageName])
 
   const handleClick = () => {
+    // console.log(stage);
     setLoading(true);
     api.updateStage(festivalName, stageName, stage)
       .then(() => {
@@ -45,8 +47,8 @@ export function StageCard({
           <DetailsTable firstColumn='djm_type' secondColumn='djm_quantity' stage={stage} setStage={setStage}/>
           <DetailsTable firstColumn='1210_type' secondColumn='1210_quantity' stage={stage} setStage={setStage}/>
           <DetailsTable firstColumn='cdj_type' secondColumn='cdj_quantity' stage={stage} setStage={setStage}/>
-          <DetailsTable firstColumn="risers" secondColumn="" stage={stage} setStage={setStage}/>
-          <DetailsTable firstColumn="notes" secondColumn="" stage={stage} setStage={setStage} />
+          <h4>Risers</h4>
+          <ObjectFormItem item={stage?.available_risers} typeOfValue='number' setProperty={setStage} nameOfProperty='available_risers' />
         </>}
         <div className="card-buttons">
           <Button onClick={() => setToggleDetails((prev) => !prev)} leftIcon={toggleDetails ? <DoubleArrowUpIcon /> : <DoubleArrowDownIcon />}>{toggleDetails ? 'Less' : 'More'}</Button>

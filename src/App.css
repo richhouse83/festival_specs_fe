@@ -79,6 +79,11 @@ td {
   justify-content: space-evenly;
 }
 
+.button-cell {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 #header {
   display: grid;
   grid-template-rows: auto auto auto;
