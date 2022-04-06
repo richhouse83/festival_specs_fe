@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Text, NumberInput} from '@mantine/core'
+import {Text, NumberInput, Table} from '@mantine/core'
 import { parseString } from "../../utils/helperFunctions";
 export function RiserRequirements({riserRequirements, risersAvailable}: {riserRequirements: any, risersAvailable: any}) {
   let riserObj = parseString(riserRequirements);
@@ -31,22 +31,24 @@ export function RiserRequirements({riserRequirements, risersAvailable}: {riserRe
 
   const itemsMap = keysArray.map((key) => {
     return (
-      <div key={key}>
-        <tr>
-          <td>
-            <Text>{key}</Text>
-          </td>
-          <td >
-            <NumberInput value={risers[key]} onChange={(value) => handleChange(value, key)} min={0} max={maxRisers?.[key] || 0}/>
-          </td>
-        </tr>
-      </div>
+      <Table key={key} className='item-table'>
+        <tbody>
+          <tr>
+            <td>
+              <Text>{key}</Text>
+            </td>
+            <td >
+              <NumberInput value={risers[key]} onChange={(value) => handleChange(value, key)} min={0} max={maxRisers?.[key] || 0}/>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
     )
   })
 
   return (
     <>
-      {itemsMap}
+      {itemsMap.length ? itemsMap : <h5>No risers available on this stage</h5>}
     </>
   )
 }

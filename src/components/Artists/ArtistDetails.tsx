@@ -8,6 +8,7 @@ import { DateSelector } from '../DateSelector';
 import * as api from '../../utils/api';
 import { artistParams } from "../../utils/artistParams";
 import { RiserRequirements } from './RiserRequirements';
+import { ObjectFormItem } from '../ObjectFormItem';
 
 export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
   const [artist, setArtist]: [Artist | undefined, Function] = useState();
@@ -17,6 +18,15 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
   const [isLoading, setIsLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [updated, setUpdated] = useState(false);
+  const [showBasicDetails, setShowBasicDetails] = useState(true);
+  const [showTouringCrew, setShowTouringCrew] = useState(false);
+  const [showStageInfo, setShowStageInfo] = useState(false);
+  const [showVehicleInfo, setShowVehicleInfo] = useState(false);
+  const [showTouringProd, setShowTouringProd] = useState(false);
+  const [showHouseProd, setShowHouseProd] = useState(false);
+  const [showFestivalExtras, setShowFestivalExtras] = useState(false);
+  const [showDJ, setShowDJ] = useState(false);
+  const [showRisers, setShowRisers] = useState(false);
   const {artistName, stageName, festivalName} = useParams();
 
   useEffect(() => {
@@ -126,24 +136,33 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
     return map;
   }
 
+  const ShowButton = ({show, setShow}: {show: boolean, setShow: Function}) => <Button variant='light' onClick={() => setShow((prev: boolean) => !prev)}>{show ? '-' : '+'}</Button>
+
   return (
     <>
-      <p>Artist Details</p>
+      
       <BeatLoader loading={isLoading} />
       {!isLoading &&
       <form onSubmit={submitForm} className={'artist-details-form'}>
-        <h3 className='artist-details-section-title'>Basic Details</h3>
-        {artistParamsMap('basic').map((item) => item)}
-        <h3 className='artist-details-section-title'>Touring Crew</h3>
-        {artistParamsMap('touring_crew').map((item) => item)}
-        <h3 className='artist-details-section-title'>Stage Info</h3>
-        {artistParamsMap('stage').map((item) => item)}
-        <h3 className='artist-details-section-title'>Vehicle Info</h3>
-        {artistParamsMap('vehicles').map((item) => item)}
-        <h3 className='artist-details-section-title'>DJ Equipment</h3>
-        {artistParamsMap('DJ').map((item) => item)}
-        <h3 className='artist-details-section-title'>Risers</h3>
-        <RiserRequirements riserRequirements={artist?.riser_requirements} risersAvailable={stage?.available_risers}/>
+        <h2 className='artist-details-section-title'>{newArtist?.artist_name}</h2>
+        <h3 className='artist-details-section-title'>Basic Details <ShowButton show={showBasicDetails} setShow={setShowBasicDetails}/></h3>
+        {showBasicDetails && artistParamsMap('basic').map((item) => item)}
+        <h3 className='artist-details-section-title'>Touring Crew <ShowButton show={showTouringCrew} setShow={setShowTouringCrew}/></h3>
+        {showTouringCrew && artistParamsMap('touring_crew').map((item) => item)}
+        <h3 className='artist-details-section-title'>Stage Info <ShowButton show={showStageInfo} setShow={setShowStageInfo}/></h3>
+        {showStageInfo && artistParamsMap('stage').map((item) => item)}
+        <h3 className='artist-details-section-title'>Vehicle Info <ShowButton show={showVehicleInfo} setShow={setShowVehicleInfo}/></h3>
+        {showVehicleInfo && artistParamsMap('vehicles').map((item) => item)}
+        <h3 className='artist-details-section-title'>Touring Production <ShowButton show={showTouringProd} setShow={setShowTouringProd}/></h3>
+        {showTouringProd && <ObjectFormItem item={artist?.touring_production_info} typeOfValue='boolean' setProperty={setNewArtist} nameOfProperty='touring_production_info'/>}
+        <h3 className='artist-details-section-title'>House Production <ShowButton show={showHouseProd} setShow={setShowHouseProd}/></h3>
+        {showHouseProd && <ObjectFormItem item={artist?.house_production_info} typeOfValue='boolean' setProperty={setNewArtist} nameOfProperty='house_production_info'/>}
+        <h3 className='artist-details-section-title'>Festival Extras <ShowButton show={showFestivalExtras} setShow={setShowFestivalExtras}/></h3>
+        {showFestivalExtras && <ObjectFormItem item={artist?.festival_extras} typeOfValue='boolean' setProperty={setNewArtist} nameOfProperty='festival_extras'/>}
+        <h3 className='artist-details-section-title'>DJ Equipment <ShowButton show={showDJ} setShow={setShowDJ}/></h3>
+        {showDJ && artistParamsMap('DJ').map((item) => item)}
+        <h3 className='artist-details-section-title'>Risers <ShowButton show={showRisers} setShow={setShowRisers}/></h3>
+        {showRisers && <RiserRequirements riserRequirements={artist?.riser_requirements} risersAvailable={stage?.available_risers}/>}
         <div className='button-section'>
           <Button className='create-button' type="submit" loading={uploading}>Update Artist</Button>
           {updated && <p>Artist Updated</p>}

@@ -56,6 +56,10 @@ td {
   gap: 15px 15px;
 }
 
+.item-table {
+  grid-column: 1/5;
+}
+
 .artist-details-section-title {
   grid-column: 1/5;
 }
@@ -65,7 +69,7 @@ td {
 }
 
 .button-section {
-  grid-column: 1/4;
+  grid-column: 1/5;
 }
 
 .card-div {

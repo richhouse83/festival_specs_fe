@@ -1,9 +1,9 @@
 import { useState, Fragment } from 'react';
 import { Button, TextInput, Table, NumberInput, Checkbox } from '@mantine/core';
 import { TrashIcon } from '@modulz/radix-icons';
-import { parseString } from "../../utils/helperFunctions";
+import { parseString } from "../utils/helperFunctions";
 
-export function ObjectFormItem({ item, nameOfProperty, typeOfValue, setProperty }: { item: string | undefined, nameOfProperty: string, typeOfValue: string, setProperty: Function }) {
+export function ObjectFormItem({ item, itemName, nameOfProperty, typeOfValue, setProperty }: { item: string | undefined, itemName?: string, nameOfProperty: string, typeOfValue: string, setProperty: Function }) {
   const itemObj = parseString(item || '') || {};
   const [itemToShow, setItemToShow] = useState(itemObj);
   const [newProp, setNewProp] = useState('');
@@ -78,12 +78,10 @@ export function ObjectFormItem({ item, nameOfProperty, typeOfValue, setProperty 
       <Fragment key={key}>
         <tr>
           <td colSpan={2}>{key}</td>
-        </tr>
-        <tr>
           <td>
             {typeOfValue === 'string' && <TextInput key={key} value={itemToShow[key]} onChange={(event) => handleUpdate(event.target.value, key)} />}
             {typeOfValue === 'number' && <NumberInput key={key} value={itemToShow[key]} min={0} onChange={(value) => handleUpdate(value, key)}/>}
-            {typeOfValue === 'boolean' && <Checkbox key={key} defaultValue={itemToShow[key]} onChange={(event) => handleUpdate(event.currentTarget.checked, key)} />}
+            {typeOfValue === 'boolean' && <Checkbox key={key} checked={itemToShow[key]} onChange={(event) => handleUpdate(event.currentTarget.checked, key)} label='Agreed?' />}
           </td>
           <td className='button-cell'>
             <Button variant='outline' color='red' leftIcon={<TrashIcon/>} onClick={() => handleDelete(key)}>Delete</Button>
@@ -94,6 +92,8 @@ export function ObjectFormItem({ item, nameOfProperty, typeOfValue, setProperty 
   })
 
   return (
+    <div className='item-table'>
+     {itemName && <h4>{itemName + 's'}</h4>}
     <Table>
       <tbody>
         {itemsMap.length > 0 ? itemsMap :
@@ -101,19 +101,20 @@ export function ObjectFormItem({ item, nameOfProperty, typeOfValue, setProperty 
             <h5>No Items</h5>
           </td>}
         <tr>
-          <td>
-            <TextInput key='newProp' placeholder='Add New Item' value={newProp} onChange={(event) => handleChange(event.target.value, setNewProp)}/>
+          <td colSpan={2}>
+            <TextInput key='newProp' placeholder={`Add New ${itemName || 'Item'}`} value={newProp} onChange={(event) => handleChange(event.target.value, setNewProp)}/>
           </td>
           <td>
             {typeOfValue === 'string' && <TextInput key='newValue' placeholder='Add New Value' value={newValue.toString()} onChange={(event) => handleChange(event.target.value, setNewValue)} disabled={!newProp}/>}
             {typeOfValue === 'number' && <NumberInput key='newValue' value={+newValue} onChange={(value) => handleChange(value, setNewValue)}  min={0} disabled={!newProp}/>}
-            {typeOfValue === 'boolean' && <Checkbox key='newValue' checked={!!newValue} onChange={(event) => handleChange(event.currentTarget.checked, setNewValue)} disabled={!newProp}/>}
+            {typeOfValue === 'boolean' && <Checkbox key='newValue' checked={!!newValue} onChange={(event) => handleChange(event.currentTarget.checked, setNewValue)} disabled={!newProp} label='Agreed?'/>}
           </td>
           <td>
-            <Button onClick={addToItem} disabled={!+newValue}>+</Button>
+            <Button onClick={addToItem} disabled={!newProp}>+</Button>
           </td>
         </tr>
       </tbody>
     </Table>
+    </div>
   )
 }

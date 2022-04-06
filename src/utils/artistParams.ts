@@ -33,11 +33,7 @@ export const artistParams = {
     screen_use: 'boolean',
     source: 'boolean',
     follow_spot_use: 'boolean',
-    touring_extras: 'string',
-    touring_extras_agreed: 'boolean',
     department_requirements: 'string',
-    festival_extras: 'string',
-    festival_extras_agreed: 'boolean',
   },
   DJ: {
     djm_type: 'string',

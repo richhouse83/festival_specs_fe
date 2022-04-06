@@ -39,10 +39,9 @@ export interface Artist {
   screen_use: boolean;
   source: boolean;
   follow_spot_use: boolean;
-  touring_extras: string;
-  touring_extras_agreed: boolean;
+  touring_production_info: string;
+  house_production_info: string;
   festival_extras: string;
-  festival_extras_agreed: boolean;
   djm_type: string;
   djm_quantity: number;
   cdj_type: string;
