@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Card, Text, Button, Alert } from "@mantine/core";
-import { DoubleArrowDownIcon, DoubleArrowUpIcon } from "@modulz/radix-icons";
+import { DoubleArrowDownIcon, DoubleArrowUpIcon, MinusCircledIcon } from "@modulz/radix-icons";
 import { Stage } from "../Interfaces";
 import { DetailsTable } from "./DetailsTable";
 import { ObjectFormItem } from "../ObjectFormItem";
+
 import * as api from '../../utils/api';
 
 export function StageCard({
@@ -60,7 +61,7 @@ export function StageCard({
           <Button onClick={() => handleClick()} loading={loading}>Update Stage Info</Button>
         </div>
         {error && <div className="card-buttons">
-          <Alert title="Update Failed" color="red">An error occurred - the stage has not been updated. Please try again later.</Alert>
+          <Alert title="Update Failed" color="red" icon={<MinusCircledIcon />}>An error occurred - the stage has not been updated. Please try again later.</Alert>
         </div>}
       </Card>
     </div>

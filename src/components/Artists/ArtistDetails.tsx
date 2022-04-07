@@ -9,6 +9,7 @@ import * as api from '../../utils/api';
 import { artistParams } from "../../utils/artistParams";
 import { RiserRequirements } from './RiserRequirements';
 import { ObjectFormItem } from '../ObjectFormItem';
+import { MinusCircledIcon } from '@modulz/radix-icons';
 
 export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
   const [artist, setArtist]: [Artist | undefined, Function] = useState();
@@ -173,7 +174,7 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
         <div className='button-section'>
           <Button className='create-button' type="submit" loading={uploading}>Update Artist</Button>
           {updated && <p>Artist Updated</p>}
-        {error && <Alert title="Update Failed" color="red">An error occurred - the artist has not been updated. Please try again later.</Alert>}
+        {error && <Alert title="Update Failed" color="red" icon={<MinusCircledIcon />}>An error occurred - the artist has not been updated. Please try again later.</Alert>}
         </div>
       </form>}
     </>
