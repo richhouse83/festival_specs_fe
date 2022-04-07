@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, Text, Button } from "@mantine/core";
+import { Card, Text, Button, Alert } from "@mantine/core";
 import { DoubleArrowDownIcon, DoubleArrowUpIcon } from "@modulz/radix-icons";
 import { Stage } from "../Interfaces";
 import { DetailsTable } from "./DetailsTable";
@@ -16,6 +16,7 @@ export function StageCard({
   const [stage, setStage]: [Stage | undefined, Function] = useState();
   const [loading, setLoading] = useState(true);
   const [toggleDetails, setToggleDetails] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     api.getStageByName(festivalName, stageName)
@@ -26,10 +27,15 @@ export function StageCard({
   }, [festivalName, stageName])
 
   const handleClick = () => {
-    // console.log(stage);
+    setError(false);
     setLoading(true);
     api.updateStage(festivalName, stageName, stage)
       .then(() => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(true);
         setLoading(false);
       })
   }
@@ -53,6 +59,9 @@ export function StageCard({
           <Button onClick={() => setToggleDetails((prev) => !prev)} leftIcon={toggleDetails ? <DoubleArrowUpIcon /> : <DoubleArrowDownIcon />}>{toggleDetails ? 'Less' : 'More'}</Button>
           <Button onClick={() => handleClick()} loading={loading}>Update Stage Info</Button>
         </div>
+        {error && <div className="card-buttons">
+          <Alert title="Update Failed" color="red">An error occurred - the stage has not been updated. Please try again later.</Alert>
+        </div>}
       </Card>
     </div>
   );

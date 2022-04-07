@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, BaseSyntheticEvent } from 'react';
-import {TextInput, Checkbox, NumberInput, Button, TextInputProps, CheckboxProps, NumberInputProps} from '@mantine/core'
+import {TextInput, Checkbox, NumberInput, Button, TextInputProps, CheckboxProps, NumberInputProps, Alert} from '@mantine/core'
 import { useParams } from 'react-router-dom';
 import { Artist, Stage } from '../Interfaces';
 import { BeatLoader } from 'react-spinners';
@@ -28,6 +28,7 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
   const [showDJ, setShowDJ] = useState(false);
   const [showRisers, setShowRisers] = useState(false);
   const {artistName, stageName, festivalName} = useParams();
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     setReturnLink(`festivals/${festivalName}/stages/${stageName}/artists/${artistName}`)
@@ -103,12 +104,18 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
   const submitForm = (event: BaseSyntheticEvent) => {
     setUpdated(false);
     setUploading(true);
+    setError(false);
     event.preventDefault();
     return api.updateArtist(festivalName, stageName, artist?.artist_name, newArtist)
       .then((returnedArtist: Artist) => {
         setArtist(returnedArtist)
         setUploading(false);
         setUpdated(true)
+      })
+      .catch((err) => {
+        console.error(err);
+        setUploading(false);
+        setError(true);
       })
   }
 
@@ -136,7 +143,7 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
     return map;
   }
 
-  const ShowButton = ({show, setShow}: {show: boolean, setShow: Function}) => <Button variant='light' onClick={() => setShow((prev: boolean) => !prev)}>{show ? '-' : '+'}</Button>
+  const ShowButton = ({show, setShow}: {show: boolean, setShow: Function}) => <Button variant='light' compact onClick={() => setShow((prev: boolean) => !prev)}>{show ? '-' : '+'}</Button>
 
   return (
     <>
@@ -166,6 +173,7 @@ export function ArtistDetails ({ setReturnLink }: {setReturnLink: Function}) {
         <div className='button-section'>
           <Button className='create-button' type="submit" loading={uploading}>Update Artist</Button>
           {updated && <p>Artist Updated</p>}
+        {error && <Alert title="Update Failed" color="red">An error occurred - the artist has not been updated. Please try again later.</Alert>}
         </div>
       </form>}
     </>
